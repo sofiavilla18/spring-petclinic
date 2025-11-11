@@ -20,3 +20,16 @@ jobs:
       TargetFolder: $(Build.ArtifactStagingDirectory)
   - upload: $(Build.ArtifactStagingDirectory)
     artifact: drop
+
+- deployment: VMDeploy
+  displayName: Web deploy
+  dependsOn: Build
+  condition: succeeded()
+  environment:
+    name: 'maquinaVirtual'
+    resourceType: VirtualMachine
+  strategy:
+     runOnce:
+       deploy:
+          steps:
+          - script: echo my first deployment
